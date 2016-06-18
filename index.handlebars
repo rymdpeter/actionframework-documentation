@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+
+  </title>
+  <style>
+    {{{styles}}}
+  </style>
+  <script>
+    {{{scripts}}}
+  </script>
+</head>
+<body>
+  {{#each sections}}
+  <article>
+    <h1>{{@key}}</h1>
+    {{#each .}}
+    <section id="{{name}}">
+        {{{content}}}
+    </section>
+    {{/each}}
+  </article>
+  {{/each}}
+</body>
+</html>
