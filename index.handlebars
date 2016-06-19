@@ -2,14 +2,11 @@
 <html>
 <head>
   <title>
-
+    Guidelines
   </title>
   <style>
     {{{styles}}}
   </style>
-  <script>
-    {{{scripts}}}
-  </script>
 </head>
 <body>
   {{#each sections}}
@@ -17,10 +14,26 @@
     <h1>{{@key}}</h1>
     {{#each .}}
     <section id="{{name}}">
+      <h2>{{title}}</h2>
         {{{content}}}
     </section>
     {{/each}}
   </article>
   {{/each}}
+ baaaa
+  <script type="text/javascript">
+    var codeTags = document.getElementsByTagName("code");
+
+    if(codeTags && codeTags.length) {
+      for (var i = 0; i < codeTags.length; i++) {
+        var tag = codeTags[i],
+          tagInner = tag.innerHTML;
+          tag.innerHTML = tagInner.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      }
+    }
+  </script>
+  <script>
+    {{{scripts}}}
+  </script>
 </body>
 </html>

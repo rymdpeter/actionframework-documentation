@@ -11,18 +11,9 @@ module.exports = function(grunt) {
         }],
         templateData: "tmp/data.json"
       }
-    },
-    watch: {
-      styles: {
-        files: ['**/*.*', ], // which files to watch
-        tasks: ['compile'],
-        options: {
-          nospawn: true
-        }
-      }
     }
   });
-  grunt.registerTask("default", ["watch"]);
+
   grunt.registerTask('compile', 'Bake the whole thing', function() {
     var styles = "";
     var scripts = "";
@@ -30,14 +21,18 @@ module.exports = function(grunt) {
 
     grunt.file.recurse("docs", function(path, root, sub, filename){
       if(sub) {
+        var content = grunt.file.read(path);
+        var name = path.replace(/[!\"#$%&'\(\)\*\+,\.\/:;<=>\?\@\[\\\]\^`\{\|\}~]/g, '').replace(" ","-");
+        var title = filename.substring(0,filename.lastIndexOf("."));
         var item = {
-          name: path.replace(/[!\"#$%&'\(\)\*\+,\.\/:;<=>\?\@\[\\\]\^`\{\|\}~]/g, '').replace(" ","-"),
-          content: grunt.file.read(path)
+          content: content,
+          name: name,
+          title: title
         }
         if(!sections[sub]) {
           sections[sub] = [item];
         } else {
-          sections.push(item);
+          sections[sub].push(item);
         }
       }
     });
