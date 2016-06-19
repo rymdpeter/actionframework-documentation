@@ -1,3 +1,5 @@
+# document-builder
+Builds a static html page from multiple sources
 
 ## How
 Download code. Open terminal at project location. Install dependencies `npm install`. Create folders in docs, or modify example contents. This is where you put your partial html files. Names of the document sections is derived from file- and folder names.
@@ -10,3 +12,4 @@ The project comes preconfigured with prismjs for c#, asp.net, javascript, css an
 ```
 <pre class="language-aspnet"><code>
 ...
+
