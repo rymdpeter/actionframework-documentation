@@ -6,18 +6,18 @@ body {
 h1,h2,h3,h4,h5,h6 {
   font-weight: normal;
 }
-pre.do {
+.do {
   background:rgba(0,255,0,0.05);
 }
-  pre.do:before {
+  .do:before {
     color: lime;
     content: "DO";
     display:block;
   }
-pre.dont {
+.dont {
   background:rgba(255,0,0,0.05);
 }
-  pre.dont:before {
+  .dont:before {
     color: red;
     content: "DON'T";
     display:block;
