@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-compile-handlebars');
+  var marked = require('marked');
 
   grunt.initConfig({
     "compile-handlebars":{
@@ -24,6 +25,11 @@ module.exports = function(grunt) {
         var content = grunt.file.read(path);
         var name = path.replace(/[!\"#$%&'\(\)\*\+,\.\/:;<=>\?\@\[\\\]\^`\{\|\}~]/g, '').replace(" ","-");
         var title = filename.substring(0,filename.lastIndexOf("."));
+        var fileType = filename.substring(filename.lastIndexOf("."));
+        
+        if(fileType == ".md") {
+          content = marked(content);
+        }
         var item = {
           content: content,
           name: name,
