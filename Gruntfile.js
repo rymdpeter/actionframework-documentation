@@ -3,6 +3,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-compile-handlebars');
   var marked = require('marked');
 
+
   grunt.initConfig({
     "compile-handlebars":{
       dist: {
@@ -19,6 +20,13 @@ module.exports = function(grunt) {
     var styles = "";
     var scripts = "";
     var sections = {};
+	var assets = {};
+	
+	grunt.file.recurse ("assets", function(path, root, sub, filename)  {
+	
+		assets[path] = new Buffer(grunt.file.read(path, {encoding: null})).toString("base64");
+		
+	});
 
     grunt.file.recurse("docs", function(path, root, sub, filename){
       if(sub) {
@@ -26,10 +34,14 @@ module.exports = function(grunt) {
         var name = path.replace(/[!\"#$%&'\(\)\*\+,\.\/:;<=>\?\@\[\\\]\^`\{\|\}~]/g, '').replace(" ","-");
         var title = filename.substring(0,filename.lastIndexOf("."));
         var fileType = filename.substring(filename.lastIndexOf("."));
+		var assets = {};
         
         if(fileType == ".md") {
           content = marked(content);
         }
+		
+		
+		
         var item = {
           content: content,
           name: name,
@@ -56,7 +68,7 @@ module.exports = function(grunt) {
     });
 
     grunt.file.write("dist/index.html", ""); //clear previous version
-    grunt.file.write("tmp/data.json", JSON.stringify({sections: sections, styles: styles, scripts: scripts})); //store
+    grunt.file.write("tmp/data.json", JSON.stringify({sections: sections, styles: styles, scripts: scripts, assets: assets})); //store
 
     grunt.task.run("compile-handlebars");
   });

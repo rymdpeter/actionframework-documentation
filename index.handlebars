@@ -20,17 +20,37 @@
     {{/each}}
   </article>
   {{/each}}
- baaaa
+
   <script type="text/javascript">
+  var assets = {};
+	{{#each assets}}
+		assets['{{@key}}'] = '{{{this}}}';
+	{{/each}}
+	
+	var imgTags = document.getElementsByTagName("img");
+
+    if(imgTags && imgTags.length) {
+		for (var i = 0; i < imgTags.length; i++) {
+			var img = imgTags[i];
+			var src = img.attributes["src"].value;
+			var type = src.substring(src.lastIndexOf(".") + 1);
+			
+			if(type == "jpg") type = "jpeg";
+			
+			img.setAttribute("src", "data:image/" + type + ";base64," + assets[src]);
+		}
+	}
+	
     var codeTags = document.getElementsByTagName("code");
 
     if(codeTags && codeTags.length) {
-      for (var i = 0; i < codeTags.length; i++) {
+      for (i = 0; i < codeTags.length; i++) {
         var tag = codeTags[i],
           tagInner = tag.innerHTML;
           tag.innerHTML = tagInner.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
       }
     }
+	
   </script>
   <script>
     {{{scripts}}}

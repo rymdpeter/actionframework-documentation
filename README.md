@@ -13,3 +13,6 @@ The project comes preconfigured with prismjs for c#, asp.net, javascript, css an
 ```
 <pre class="language-aspnet"><code>
 ```
+
+## Assets (adding images)
+Put image files into `assets` folder and link them relative to *root project path*, like so: `<img src="assets/my-image.png" />` Supported formats are .jpg, .gif, .png. Files are encoded into base64 and inserted inline.
