@@ -2,7 +2,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-compile-handlebars');
   var marked = require('marked');
-
+  var cheerio = require('cheerio');
 
   grunt.initConfig({
     "compile-handlebars":{
@@ -21,11 +21,11 @@ module.exports = function(grunt) {
     var scripts = "";
     var sections = {};
 	var assets = {};
-	
+
 	grunt.file.recurse ("assets", function(path, root, sub, filename)  {
-	
+
 		assets[path] = new Buffer(grunt.file.read(path, {encoding: null})).toString("base64");
-		
+
 	});
 
     grunt.file.recurse("docs", function(path, root, sub, filename){
@@ -34,14 +34,27 @@ module.exports = function(grunt) {
         var name = path.replace(/[!\"#$%&'\(\)\*\+,\.\/:;<=>\?\@\[\\\]\^`\{\|\}~]/g, '').replace(" ","-");
         var title = filename.substring(0,filename.lastIndexOf("."));
         var fileType = filename.substring(filename.lastIndexOf("."));
-		var assets = {};
-        
-        if(fileType == ".md") {
+
+        if(fileType == ".md") { //format any markdown files
           content = marked(content);
         }
-		
-		
-		
+
+        var $ = cheerio.load(content);
+        $("img").each(function(i,e){ //
+          var key = $(e).attr("src");
+          if(assets[key]) {
+
+            var type = key.substring(key.lastIndexOf(".") + 1);
+      			if(type == "jpg") type = "jpeg";
+            $(e).attr("src", "data:image/" + type + ";base64," + assets[key])
+          }
+
+        $("code").each(function(i,e) {
+          $(e).html($(e).html().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+        });
+          content = $.html();
+        });
+
         var item = {
           content: content,
           name: name,
