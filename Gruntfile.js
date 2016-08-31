@@ -16,11 +16,11 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('compile', 'Bake the whole thing', function() {
+  grunt.registerTask('compile', 'Compile all documents to single a file', function() {
     var styles = "";
     var scripts = "";
     var sections = {};
-	var assets = {};
+	   var assets = {};
 
 	grunt.file.recurse ("assets", function(path, root, sub, filename)  {
 
@@ -43,17 +43,16 @@ module.exports = function(grunt) {
         $("img").each(function(i,e){ //
           var key = $(e).attr("src");
           if(assets[key]) {
-
             var type = key.substring(key.lastIndexOf(".") + 1);
       			if(type == "jpg") type = "jpeg";
             $(e).attr("src", "data:image/" + type + ";base64," + assets[key])
           }
+        });
 
         $("code").each(function(i,e) {
           $(e).html($(e).html().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
         });
-          content = $.html();
-        });
+        content = $.html();
 
         var item = {
           content: content,
