@@ -10,9 +10,6 @@ module.exports = function(grunt) {
         files: [{
           src: 'index.handlebars',
           dest: 'dist/index.html'
-        },{
-          src: 'readme.handlebars',
-          dest: 'README.md'
         }
       ],
         templateData: "tmp/data.json"
@@ -84,7 +81,7 @@ module.exports = function(grunt) {
     });
 
     grunt.file.write("dist/index.html", ""); //clear previous version
-        grunt.file.write("README.md", ""); //clear previous version
+
     grunt.file.write("tmp/data.json", JSON.stringify({sections: sections, styles: styles, scripts: scripts, assets: assets})); //store
 
     grunt.task.run("compile-handlebars");
