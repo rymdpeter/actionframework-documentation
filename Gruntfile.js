@@ -84,6 +84,7 @@ module.exports = function(grunt) {
     });
 
     grunt.file.write("dist/index.html", ""); //clear previous version
+        grunt.file.write("README.md", ""); //clear previous version
     grunt.file.write("tmp/data.json", JSON.stringify({sections: sections, styles: styles, scripts: scripts, assets: assets})); //store
 
     grunt.task.run("compile-handlebars");
