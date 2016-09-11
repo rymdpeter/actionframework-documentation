@@ -10,7 +10,11 @@ module.exports = function(grunt) {
         files: [{
           src: 'index.handlebars',
           dest: 'dist/index.html'
-        }],
+        },{
+          src: 'readme.handlebars',
+          dest: 'README.md'
+        }
+      ],
         templateData: "tmp/data.json"
       }
     }
